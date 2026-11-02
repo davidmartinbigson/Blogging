@@ -125,7 +125,7 @@ Stories render with a centred, gold-accented layout and are labelled as AI-assis
 4. Deploy, then point your domain at the project (**Settings → Domains**).
 5. Every push to the main branch redeploys — that is your publishing mechanism.
 
-After the first deploy, set `NEXT_PUBLIC_SITE_URL` to the real domain and redeploy so canonical URLs, the sitemap and the RSS feed use it.
+Canonical URLs, the sitemap, RSS and structured data resolve in this order: `NEXT_PUBLIC_SITE_URL` → Vercel's own `VERCEL_PROJECT_PRODUCTION_URL` → a placeholder. So a first deploy is already correct on the `*.vercel.app` domain; add `NEXT_PUBLIC_SITE_URL` once you attach a custom domain and redeploy.
 
 ---
 

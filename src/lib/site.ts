@@ -3,6 +3,26 @@
  * Everything brand-related lives here so a rebrand is a one-file change.
  */
 
+/**
+ * Canonical origin for the site.
+ *
+ * Resolution order:
+ *  1. NEXT_PUBLIC_SITE_URL        — set this to your real domain
+ *  2. VERCEL_PROJECT_PRODUCTION_URL — injected by Vercel at build time, so a
+ *     fresh deploy has correct canonical URLs before any env vars exist
+ *  3. a safe placeholder for local builds
+ */
+function resolveSiteUrl(): string {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (explicit) return explicit.replace(/\/$/, "");
+
+  const vercel =
+    process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim() || process.env.VERCEL_URL?.trim();
+  if (vercel) return `https://${vercel.replace(/^https?:\/\//, "").replace(/\/$/, "")}`;
+
+  return "https://sageandstory.com";
+}
+
 export const siteConfig = {
   name: "Sage & Story",
   shortName: "S&S",
@@ -10,7 +30,7 @@ export const siteConfig = {
   tagline: "Everyday wisdom, well told.",
   description:
     "Sage & Story publishes thoughtful, practical writing on food, health, money, home, technology and travel — plus original short fiction from our story studio.",
-  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://sageandstory.com").replace(/\/$/, ""),
+  url: resolveSiteUrl(),
   locale: "en_US",
   language: "en",
   email: "hello@sageandstory.com",
