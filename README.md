@@ -72,6 +72,25 @@ Opening paragraph — this one gets a drop cap automatically.
 Body copy. **Bold** the key phrase in each section.
 ```
 
+### Images
+
+Store photographs in `public/images/blog/` (guides) or `public/images/stories/` (fiction) and
+reference them in frontmatter. `next/image` converts them to AVIF/WebP at the edge, so upload a
+single 1600×900 master and let the framework do the resizing.
+
+```yaml
+image: "/images/blog/knife-sharpening.jpg"
+imageAlt: "A whetstone with a chef's knife resting on it"   # used as the alt text
+```
+
+Inline images use the `Figure` component so they get a caption and responsive sizing:
+
+```mdx
+<Figure src="/images/blog/knife-angle.jpg" alt="The 15-degree angle against a whetstone" caption="Fifteen degrees is roughly the thickness of a coin under the spine." />
+```
+
+`npm run seo:check` fails the build if a referenced image file does not exist.
+
 ### Components available inside MDX
 
 ```mdx
@@ -83,8 +102,20 @@ A shaded callout for caveats, safety notes and “don’t skip this” moments.
 A pulled-out line for emphasis.
 </PullQuote>
 
-<KeyValue items={[{ label: "Prep", value: "10 min" }, { label: "Serves", value: "4" }]} />
+<Takeaways>
+- The four claims a skimming reader should leave with.
+- Written as a markdown list, not as an array prop.
+</Takeaways>
+
+<Steps>
+<Step title="Preheat the pan">Two minutes before anything goes in.</Step>
+<Step title="Sear without stirring">Leave it alone for 3–4 minutes.</Step>
+</Steps>
 ```
+
+> **Important:** `next-mdx-remote` v6 passes **string** props (`title`, `src`, `caption`) to
+> components but drops array/object props. Use markdown lists and tables instead of
+> `items={[...]}` — that is why `Takeaways` takes children and temperatures live in a table.
 
 Tables, lists, blockquotes, code blocks and images all work through standard markdown. Links starting with `/` are routed client-side automatically.
 

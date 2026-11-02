@@ -558,6 +558,91 @@
   }
 }
 
+
+
+/* Key takeaways block */
+.takeaways {
+  margin: 2rem 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-muted);
+  padding: 1.15rem 1.35rem;
+  font-family: var(--font-sans);
+}
+
+.takeaways-title {
+  margin: 0 0 0.7rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.article-body .takeaways ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.article-body .takeaways ul > li {
+  position: relative;
+  margin-top: 0.5rem;
+  padding-left: 1.1rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.article-body .takeaways ul > li:first-child {
+  margin-top: 0;
+}
+
+.article-body .takeaways ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--accent);
+  opacity: 0.8;
+}
+
+/* Sources list at the end of an article */
+.article-body h2#sources + ul,
+.article-body .sources {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.article-body h2#sources + ul li::before {
+  background: var(--line-strong);
+  width: 4px;
+  height: 4px;
+}
+
+.article-body .source-link {
+  text-decoration-color: var(--line-strong);
+}
+
+.article-body .source-link:hover {
+  background: transparent;
+}
+
+/* Figure captions produced by the <Figure> component */
+.article-body figure figcaption {
+  margin-top: 0.65rem;
+}
+
+/* Keep numbers in tables/tabular content aligned */
+.article-body table {
+  font-variant-numeric: tabular-nums;
+}
+
 /* -------------------------------------------------------------------------- */
 /*  Scrollbars                                                                */
 /* -------------------------------------------------------------------------- */

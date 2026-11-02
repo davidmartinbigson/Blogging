@@ -1,98 +1,122 @@
 ---
 title: "Your Phone Is Not the Problem: A Digital Hygiene Checklist"
-description: "Screen-time limits mostly fail. A short, one-off set of structural decisions about notifications, accounts and friction is what actually works."
+description: "Screen-time limits mostly fail. What works is structural: notification bans, unique passwords, app-based two-factor and fewer interruptions."
 date: "2026-10-15"
-updated: "2026-10-20"
+updated: "2026-11-02"
 category: "tech"
-tags: ["digital wellbeing", "privacy", "attention", "security"]
+tags: ["digital wellbeing", "privacy", "security", "attention"]
 author: "editorial-desk"
 keywords: [
-  "digital hygiene",
+  "digital hygiene checklist",
   "reduce screen time",
-  "phone addiction",
-  "notification settings",
-  "password manager",
-  "privacy checklist"
+  "nist password guidelines 2024",
+  "two factor authentication app",
+  "notification settings"
 ]
 featured: false
 trending: true
 draft: false
+image: "/images/blog/digital-hygiene.jpg"
+imageAlt: "A phone lying face down beside a closed notebook and reading glasses on an oak desk"
 faq:
-  - question: "Does screen time tracking actually help?"
-    answer: "For a small minority, yes. For most people, tracking produces awareness followed by guilt, without changing behaviour. Structural changes — turning off notifications, removing the app, adding friction — have a much larger effect because they do not rely on willpower at the moment of temptation."
-  - question: "Should I delete social media entirely?"
-    answer: "Not necessarily. Deleting the app from your phone while keeping the account is often more sustainable: you retain access when you deliberately want it, and lose the reflex of opening it in a queue. For some people full removal is the right call."
-  - question: "How often should I change passwords?"
-    answer: "Modern guidance (NIST in the US, NCSC in the UK) no longer recommends forced regular changes, which tend to produce weak incremental variations. Use unique passwords for every account, store them in a password manager, and change a password immediately if a service reports a breach."
-  - question: "Is a VPN necessary?"
-    answer: "A VPN is useful on untrusted Wi-Fi and for privacy from your network provider. It is not a substitute for HTTPS, updates or a password manager, and it does not make you anonymous. For most people the other items on this checklist matter more."
+  - question: "What are the current NIST password rules?"
+    answer: "NIST's digital identity guidelines (SP 800-63B) advise a minimum of 8 characters, screening new passwords against lists of compromised ones, no forced periodic rotation, and no composition rules demanding mixed character types. Length and uniqueness matter more than complexity."
+  - question: "Is SMS two-factor authentication safe?"
+    answer: "Better than no second factor, but the weakest common option. NIST classes SMS as a restricted authenticator because of SIM-swap and interception risks. An authenticator app, a passkey or a hardware security key is stronger."
+  - question: "How long does it take to refocus after an interruption?"
+    answer: "In observational studies of office workers, it took around 23 minutes to return to an interrupted task. That figure is an average across fast and slow resumptions, not a law, but the direction is consistent: interruptions cost far more than their duration."
+  - question: "Do screen-time limits work?"
+    answer: "Evidence is mixed and effects are small. Structural changes — removing the app, disabling notifications, adding friction — do not depend on willpower at the moment of temptation and tend to hold up better."
 ---
 
-There is a genre of advice that says the answer to your phone is a screen-time limit, a greyscale filter, and a small amount of shame. It rarely works, and it is not your fault. Willpower is a terrible interface.
+There is a genre of advice that says the answer to your phone is a screen-time limit, a greyscale filter and a small amount of shame. It rarely works, and that is not a personal failing. Willpower is a terrible interface.
 
-The approach that works is structural. You change the environment once, in a calm moment, so that the decision you would like to make is the default rather than a daily battle.
+The approach that works is structural. Change the environment once, in a calm moment, so that the decision you would prefer becomes the default rather than a daily battle.
 
-## 1. Turn off every notification except humans
+<Takeaways>
+- Turn off every notification except messages from people and genuine time-critical alerts.
+- Use unique passwords in a manager — and stop forcing periodic changes.
+- Prefer an authenticator app or passkey to SMS codes.
+- Batch your own interruptions; each one costs far more than its length.
+</Takeaways>
 
-This is the highest-return change on the list, and it takes about four minutes.
+## 1. Notifications: keep only humans
 
-Go through your notification settings and keep only two categories: **messages from real people** and **anything genuinely time-critical** (a delivery, a flight, a bank alert). Turn off everything else: likes, follows, "trending", news alerts, promotional pushes, "we miss you" nudges.
+This is the highest-return change on the list, and it takes four minutes.
+
+Keep two categories: **messages from real people** and **genuinely time-critical** (a delivery, a flight, a bank alert). Turn off likes, follows, trending, news pushes, promotional nudges and "we miss you" messages.
 
 <Note title="The test">
-For each app, ask: if this stopped notifying me entirely, what would break? If the honest answer is "nothing", it is not a notification, it is advertising.
+For each app: if this stopped notifying me entirely, what would break? If the honest answer is "nothing", it is not a notification — it is advertising.
 </Note>
 
-Most phones let you do this in bulk: iOS has a "Scheduled Summary" that batches non-urgent notifications into two deliveries a day; Android has a notification channel per app. Both are worth ten minutes.
+Both major platforms now let you batch rather than eliminate: iOS has Scheduled Summary, which delivers non-urgent notifications in two grouped drops a day, and Android has per-app notification channels you can mute individually. Ten minutes in settings buys a quieter month.
 
-## 2. Remove the home screen
+## 2. Move the icons
 
-The placement of an icon is a far stronger signal than any intention. Move the apps you open reflexively off the first screen — into a folder, into the app library, or off the phone entirely.
+Placement beats intention. Move reflexively-opened apps off the first screen — into a folder, into the app library, or off the phone entirely.
 
-A useful rule: **if you have opened an app more than twenty times this week without deciding to, it comes off the phone.** You can still use the website. The friction of typing an address is enough to convert a reflex into a decision.
+A workable rule: **if you opened an app more than twenty times this week without deciding to, remove it from the phone.** You can still use the website, and typing an address converts a reflex into a decision.
 
-## 3. Fix the accounts you have already lost
+## 3. The interruption math
 
-Security and attention are the same problem viewed from different angles. An account you cannot recover is an account that owns you.
+Notifications are not free. In field studies of office workers, people took around **23 minutes** to resume an interrupted task, and often worked faster afterwards to compensate — at the cost of stress. A handful of notifications per hour is not a small tax; it is most of the morning.
 
-- **Password manager first.** One manager (Bitwarden, 1Password, Apple Passwords, KeePassXC) and unique passwords everywhere. This single step removes most account-takeover risk.
-- **Two-factor authentication, app-based.** Prefer an authenticator app or a hardware key over SMS, which is vulnerable to SIM-swap attacks. Start with email, banking and your main social account.
-- **Check breach exposure.** Look up your address at Have I Been Pwned, then change the passwords for anything exposed and reuse nothing.
-- **Recovery routes.** For your primary email account, confirm the recovery address and phone number are current. It is the master key to everything else.
+That single number justifies batching: answer messages at two or three fixed points rather than continuously. You will be slower to reply and faster to finish.
 
-## 4. Reduce what is tracked about you
+<Figure src="/images/blog/digital-hygiene.jpg" alt="Phone face down on a wooden desk beside a notebook and glasses" caption="Face down, notifications off, one deliberate check per hour. The device does not change; its defaults do." />
 
-You will not become anonymous, and chasing that is a distraction. The realistic goal is a smaller, tidier footprint.
+## 4. Passwords and second factors
+
+Security and attention are the same problem seen from two angles. An account you cannot recover owns you.
+
+- **Use a password manager.** One manager (Bitwarden, 1Password, KeePassXC, or the built-in Apple and Google options) and unique passwords everywhere. This removes most account-takeover risk in a single step.
+- **Stop rotating passwords on a schedule.** NIST's guidance (SP 800-63B) explicitly discourages forced periodic changes, which tend to produce weak predictable variations. Change a password when a service reports a breach.
+- **Prefer app-based second factors.** NIST classes SMS as a *restricted* authenticator because of SIM-swap and interception risk. The FBI has repeatedly warned about SIM-swap attacks. Use an authenticator app, a passkey, or a hardware key for email, banking and your main social account.
+- **Check exposure.** Search your address at Have I Been Pwned, then change the passwords for anything listed — after which, stop reusing anything.
+- **Secure the recovery route.** For your primary email account, confirm the recovery address and phone number are current. It is the master key to everything else.
+
+## 5. Reduce what is tracked about you
+
+You will not become anonymous, and chasing that is a distraction. A smaller, tidier footprint is achievable in one sitting.
 
 | Setting | Why it matters |
 | --- | --- |
-| Ad ID reset / limit tracking | Reduces cross-app profiling at almost no cost |
+| Limit ad tracking / reset advertising ID | Reduces cross-app profiling at almost no cost |
 | Browser: block third-party cookies | Stops most cross-site tracking by default |
-| Search: switch to a privacy-respecting engine | Cuts a large share of your search history trail |
-| App permissions audit | Photo, location and microphone access are often unnecessary |
-| Location: "while using" instead of "always" | Prevents background location logging |
+| App permission audit | Photo, location and microphone access are often unnecessary |
+| Location: "while using" not "always" | Prevents background location logging |
+| App Tracking Transparency / equivalent | Opt out of cross-app tracking where offered |
 
-Ten minutes in settings, twice a year, covers all of it.
+## 6. Decide what the phone is for
 
-## 5. Decide what you want the phone for
+This is the part no settings screen covers.
 
-This is the part nobody writes about, because it is not a setting.
+Write a short list: what do you actually want to do on this device? Reading, messaging three specific people, navigation, banking, a camera, music. Then notice how much of your usage falls outside it.
 
-Make a short list: what do you actually want to do on this device? Reading, messaging three specific people, navigation, banking, a camera, music. Then notice how much of your usage falls outside the list.
-
-The goal is not less phone. It is a phone that does the things you chose, and less of the things a growth team chose for you.
+The goal is not less phone. It is a phone that does the things you chose and fewer of the things a growth team chose for you.
 
 <Note title="A realistic experiment">
-For one week, keep the phone out of the bedroom and charge it in another room overnight. No other changes. Most people report better sleep and a noticeably calmer morning. If that is the single change you make from this article, it is enough.
+For one week, charge the phone in a different room overnight. No other changes. That single change — not an app, not a limit — is the one most people report noticing in the morning.
 </Note>
 
-## 6. Maintain it twice a year
+## The twice-a-year maintenance pass
 
-Digital hygiene is not a one-off declutter; it is a small piece of maintenance, like replacing a smoke alarm battery. Put a recurring reminder in your calendar for January and July with this list:
+Digital hygiene is a small piece of upkeep, like replacing a smoke alarm battery. Put a recurring reminder in the calendar for January and July:
 
-1. Notifications audit (anything new and noisy?)
-2. App deletion pass (what have you not opened in 30 days?)
+1. Notifications audit — anything new and noisy?
+2. App deletion pass — what has not been opened in 30 days?
 3. Password manager check for reused or weak entries
-4. Account permission review
-5. Backups — phone, photos, documents — verified, not assumed
+4. Permission and privacy review
+5. Backups verified, not assumed
 
-Twenty minutes, twice a year. That is the entire system, and it will do more for your attention and security than any app promising to fix either.
+Twenty minutes, twice a year. That is the entire system.
+
+## Sources
+
+- NIST — [Digital Identity Guidelines, SP 800-63B (authentication)](https://pages.nist.gov/800-63-4/sp800-63b.html)
+- NCSC (UK) — [Top tips for staying secure online](https://www.ncsc.gov.uk/collection/top-tips-for-staying-secure-online)
+- FBI — [SIM swapping warnings, IC3](https://www.ic3.gov/)
+- CISA — [Secure our world: multi-factor authentication](https://www.cisa.gov/secure-our-world)
+- Mark G, Gonzalez V, Harris J. — *No Task Left Behind? Examining the nature of fragmented work* (2005)
+- Have I Been Pwned — [check your exposure](https://haveibeenpwned.com/)

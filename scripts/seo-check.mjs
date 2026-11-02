@@ -72,15 +72,25 @@ for (const folder of FOLDERS) {
     const faq = Array.isArray(data.faq) ? data.faq : [];
     if (!isStory && faq.length === 0) add(warnings, short, "no FAQ items — they earn extra SERP real estate");
 
-    if (/!\[[^\]]*\]\(\/images\/(?!.*\.(jpg|jpeg|png|webp|avif))/.test(content)) {
-      add(errors, short, "references an image that does not look like a real file");
+    // Every referenced public image must exist on disk.
+    const referenced = [
+      ...(data.image ? [String(data.image)] : []),
+      ...[...content.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)].map((m) => m[1]),
+      ...[...content.matchAll(/<Figure[^>]*src="([^"]+)"/g)].map((m) => m[1]),
+    ].filter((src) => src.startsWith("/"));
+
+    for (const src of new Set(referenced)) {
+      const asset = path.join(process.cwd(), "public", src.replace(/^\//, "").split("?")[0]);
+      if (!fs.existsSync(asset)) add(errors, short, `missing image file: public${src}`);
     }
+
+    if (!data.image) add(warnings, short, "no hero image — cards fall back to generated art");
 
     if (data.draft === true) add(warnings, short, "still marked draft:true (hidden in production)");
     if (/TODO|lorem ipsum|TK\b/i.test(content)) add(errors, short, "contains placeholder text (TODO / lorem ipsum)");
 
     console.log(
-      `${short.padEnd(58)} ${String(count).padStart(4)}w  H2:${h2s}  faq:${faq.length}  ${data.draft ? "DRAFT" : "live"}`,
+      `${short.padEnd(52)} ${String(count).padStart(4)}w  H2:${h2s}  faq:${faq.length}  img:${data.image ? "yes" : "no "}  ${data.draft ? "DRAFT" : "live"}`,
     );
   }
 }
