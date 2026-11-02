@@ -46,6 +46,13 @@ Bas mujhe message karein, misaal ke taur par:
 
 Main `content/posts/` mein naye `.mdx` files bana dunga, SEO fields (title, description, keywords, FAQ) ke saath. Aap sirf review karke publish karenge.
 
+**Tasveerein (images):** har article ki ek hero photo `public/images/blog/` mein rakhein (1600×900, JPG). Frontmatter mein:
+```yaml
+image: "/images/blog/mera-article.jpg"
+imageAlt: "Tasveer ki English description (Google ise parhta hai)"
+```
+Agar image nahi hai to card khud-ba-khud gradient art dikhata hai — lekin photo wala article zyada click pata hai. `npm run seo:check` batayega ke koi image missing hai ya nahi.
+
 **Khud likhna ho to:**
 
 ```bash

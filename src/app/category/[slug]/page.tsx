@@ -56,7 +56,12 @@ export default async function CategoryPage({ params }: Params) {
         ])}
       />
 
-      <CategoryHeader slug={slug} count={posts.length} latestDate={posts[0]?.date} />
+      <CategoryHeader
+        slug={slug}
+        count={posts.length}
+        latestDate={posts[0]?.date}
+        cover={posts.find((post) => post.image)}
+      />
 
       <div className="shell py-12">
         {posts.length === 0 ? (

@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
-import { PostCard } from "@/components/post-card";
+import { PostCard, hrefFor } from "@/components/post-card";
 import { getAllStories } from "@/lib/content";
 import { buildMetadata, graph, itemListSchema } from "@/lib/seo";
 import { siteConfig, storyCategory } from "@/lib/site";
@@ -51,7 +52,7 @@ export default function StoriesPage() {
           <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-[#8f8677]">
             <span>{stories.length} stories</span>
             <span aria-hidden>·</span>
-            <span>2–4 minutes each</span>
+            <span>2–5 minutes each</span>
             <span aria-hidden>·</span>
             <Link href="/editorial-policy" className="text-[#d8a74a] hover:opacity-80">
               How these are made
@@ -66,8 +67,44 @@ export default function StoriesPage() {
         ) : (
           <>
             {lead ? (
-              <section className="border-b border-line pb-12">
-                <PostCard doc={lead} variant="hero" />
+              <section className="grid gap-8 border-b border-line pb-12 lg:grid-cols-[1.3fr_1fr] lg:items-center">
+                <Link href={hrefFor(lead)} className="group block overflow-hidden rounded-xl border border-line">
+                  <div className="relative aspect-[16/10]">
+                    {lead.image ? (
+                      <Image
+                        src={lead.image}
+                        alt={lead.imageAlt ?? lead.title}
+                        fill
+                        priority
+                        sizes="(min-width: 1024px) 55vw, 100vw"
+                        className="object-cover transition-transform duration-[900ms] group-hover:scale-[1.03]"
+                      />
+                    ) : (
+                      <div
+                        className="absolute inset-0"
+                        style={{ background: "linear-gradient(150deg, #C7952B, #7A5410)" }}
+                        aria-hidden
+                      />
+                    )}
+                  </div>
+                </Link>
+                <div>
+                  <p className="text-[0.65rem] uppercase tracking-[0.16em] text-gold">
+                    Latest story · {lead.readingTime} min
+                  </p>
+                  <h2 className="mt-3 font-serif text-[clamp(1.8rem,1.3rem+1.8vw,2.6rem)] font-semibold leading-[1.08] text-ink">
+                    <Link href={hrefFor(lead)} className="underline-sweep">
+                      {lead.title}
+                    </Link>
+                  </h2>
+                  <p className="mt-4 text-[0.98rem] leading-relaxed text-muted">{lead.description}</p>
+                  <Link
+                    href={hrefFor(lead)}
+                    className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-xs font-medium text-paper transition-opacity hover:opacity-85"
+                  >
+                    Read the story
+                  </Link>
+                </div>
               </section>
             ) : null}
 
@@ -81,9 +118,12 @@ export default function StoriesPage() {
               <p className="kicker mb-2 text-gold">A note on how these are written</p>
               <p>
                 Each story starts with a single image or question. Drafts are produced with AI
-                assistance, then edited by a human for pacing, dialogue and consistency. We
-                publish a story only when it would hold up without the technology behind it.
-                <Link href="/editorial-policy" className="ml-1 text-ink underline decoration-gold underline-offset-4 hover:text-gold">
+                assistance, then edited by a human for pacing, dialogue and consistency. We publish
+                a story only when it would hold up without the technology behind it.
+                <Link
+                  href="/editorial-policy"
+                  className="ml-1 text-ink underline decoration-gold underline-offset-4 hover:text-gold"
+                >
                   Read the full policy
                 </Link>
                 .

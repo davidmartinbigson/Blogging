@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Doc, DocSummary } from "@/lib/types";
 import { getAuthor, getCategory } from "@/lib/site";
@@ -191,22 +192,25 @@ export function CategoryHeader({
   slug,
   count,
   latestDate,
+  cover,
 }: {
   slug: string;
   count: number;
   latestDate?: string;
+  cover?: { image?: string; imageAlt?: string; title: string; slug: string };
 }) {
   const category = getCategory(slug);
   if (!category) return null;
+
   return (
-    <header className="relative overflow-hidden border-b border-line">
+    <header className="relative overflow-hidden border-b border-line bg-paper-deep">
       <div
         className="absolute inset-x-0 top-0 h-1"
         style={{ background: `linear-gradient(90deg, ${category.from}, ${category.to})` }}
         aria-hidden
       />
-      <div className="shell py-12 md:py-16">
-        <div className="max-w-3xl">
+      <div className="shell grid gap-10 py-12 md:py-16 lg:grid-cols-[1.15fr_1fr] lg:items-center">
+        <div className="max-w-2xl">
           <div className="flex items-center gap-3">
             <span
               className="grid size-11 place-items-center rounded-full font-serif text-xl text-white"
@@ -222,14 +226,37 @@ export function CategoryHeader({
               </h1>
             </div>
           </div>
-          <p className="mt-5 max-w-2xl text-sm leading-relaxed text-muted md:text-[0.95rem]">
-            {category.intro}
-          </p>
+          <p className="mt-5 text-sm leading-relaxed text-muted md:text-[0.97rem]">{category.intro}</p>
           <p className="mt-4 text-xs uppercase tracking-[0.12em] text-faint">
             {count} {count === 1 ? "article" : "articles"}
             {latestDate ? ` · Updated ${formatDateLong(latestDate)}` : ""}
           </p>
         </div>
+
+        {cover?.image ? (
+          <Link
+            href={`/blog/${cover.slug}`}
+            className="group relative block overflow-hidden rounded-xl border border-line"
+          >
+            <div className="relative aspect-[16/10]">
+              <Image
+                src={cover.image}
+                alt={cover.imageAlt ?? cover.title}
+                fill
+                priority
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                className="object-cover transition-transform duration-[900ms] group-hover:scale-[1.04]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" aria-hidden />
+              <div className="absolute inset-x-0 bottom-0 p-4">
+                <p className="text-[0.62rem] uppercase tracking-[0.16em] text-white/70">Latest</p>
+                <p className="mt-1 font-serif text-base font-semibold leading-snug text-white">
+                  {cover.title}
+                </p>
+              </div>
+            </div>
+          </Link>
+        ) : null}
       </div>
     </header>
   );

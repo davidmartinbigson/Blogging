@@ -1,20 +1,15 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { AdSlot } from "@/components/ad-slot";
-import { CoverArt } from "@/components/cover-art";
+import { CategoryTiles } from "@/components/category-tiles";
 import { ArrowRightIcon, ArrowUpRightIcon, BookIcon, SparkIcon } from "@/components/icons";
 import { JsonLd } from "@/components/json-ld";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { PostCard } from "@/components/post-card";
 import { SectionHeading } from "@/components/section-heading";
-import {
-  getAllPosts,
-  getAllStories,
-  getFeatured,
-  getLatest,
-  getTrending,
-} from "@/lib/content";
-import { categories, siteConfig, storyCategory } from "@/lib/site";
+import { getAllPosts, getAllStories, getFeatured, getLatest, getTrending } from "@/lib/content";
+import { categories, siteConfig } from "@/lib/site";
 import { buildMetadata, graph, itemListSchema } from "@/lib/seo";
 import { formatDateLong } from "@/lib/utils";
 
@@ -26,12 +21,12 @@ export const metadata: Metadata = buildMetadata({
 
 export default function HomePage() {
   const posts = getAllPosts();
-  const featured = getFeatured(3);
+  const stories = getAllStories();
+  const featured = getFeatured(4);
   const lead = featured[0];
-  const secondary = featured.slice(1, 3);
+  const picks = featured.slice(1, 4);
   const trending = getTrending(5);
   const latest = getLatest(6, featured.map((post) => post.slug));
-  const stories = getAllStories().slice(0, 3);
   const today = new Date().toISOString().slice(0, 10);
 
   return (
@@ -51,10 +46,10 @@ export default function HomePage() {
       />
 
       {/* ---------------------------------------------------------------- */}
-      {/* Masthead                                                          */}
+      {/* Masthead strip                                                    */}
       {/* ---------------------------------------------------------------- */}
       <div className="border-b border-line">
-        <div className="shell flex flex-wrap items-center justify-between gap-3 py-3 text-[0.68rem] uppercase tracking-[0.14em] text-faint">
+        <div className="shell flex flex-wrap items-center justify-between gap-3 py-3 text-[0.66rem] uppercase tracking-[0.16em] text-faint">
           <time dateTime={today}>{formatDateLong(today)}</time>
           <p className="hidden sm:block">Independent · Reader-supported · Human-edited</p>
           <p>
@@ -66,14 +61,14 @@ export default function HomePage() {
       </div>
 
       {/* ---------------------------------------------------------------- */}
-      {/* Lead story                                                        */}
+      {/* Lead + trending                                                   */}
       {/* ---------------------------------------------------------------- */}
-      <section className="shell pb-4 pt-10 md:pt-14" aria-labelledby="lead-heading">
+      <section className="shell pb-10 pt-10 md:pt-12" aria-labelledby="lead-heading">
         <h1 id="lead-heading" className="sr-only">
           {siteConfig.name} — {siteConfig.tagline}
         </h1>
 
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)]">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)]">
           <div className="fade-up">
             {lead ? (
               <PostCard doc={lead} variant="hero" priority />
@@ -82,7 +77,7 @@ export default function HomePage() {
             )}
           </div>
 
-          <aside className="lg:border-l lg:border-line lg:pl-10">
+          <aside className="lg:border-l lg:border-line lg:pl-9">
             <div className="flex items-center justify-between border-b border-line pb-3">
               <h2 className="kicker text-accent">Trending now</h2>
               <SparkIcon className="size-4 text-faint" />
@@ -102,13 +97,14 @@ export default function HomePage() {
       </section>
 
       {/* ---------------------------------------------------------------- */}
-      {/* Two secondary features                                            */}
+      {/* Editors' picks                                                    */}
       {/* ---------------------------------------------------------------- */}
-      {secondary.length > 0 ? (
-        <section className="shell pb-16 pt-10" aria-label="More editors' picks">
-          <div className="grid gap-10 border-t border-line pt-10 sm:grid-cols-2">
-            {secondary.map((doc) => (
-              <PostCard key={doc.slug} doc={doc} variant="wide" />
+      {picks.length > 0 ? (
+        <section className="shell pb-16" aria-label="Editors' picks">
+          <SectionHeading kicker="Editors’ picks" title="Worth your evening" href="/blog" linkLabel="All articles" />
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {picks.map((doc) => (
+              <PostCard key={doc.slug} doc={doc} variant="feature" />
             ))}
           </div>
         </section>
@@ -126,85 +122,7 @@ export default function HomePage() {
             href="/blog"
             linkLabel="All articles"
           />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {categories.map((category) => {
-              const count = posts.filter((post) => post.category === category.slug).length;
-              return (
-                <Link
-                  key={category.slug}
-                  href={`/category/${category.slug}`}
-                  className="group relative overflow-hidden rounded-lg border border-line bg-surface p-5 card-lift"
-                >
-                  <div
-                    className="absolute inset-x-0 top-0 h-1"
-                    style={{ background: `linear-gradient(90deg, ${category.from}, ${category.to})` }}
-                    aria-hidden
-                  />
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="font-serif text-lg font-semibold text-ink">{category.name}</h3>
-                      <p className="mt-1.5 line-clamp-2 text-[0.83rem] leading-relaxed text-muted">
-                        {category.description}
-                      </p>
-                    </div>
-                    <span
-                      className="grid size-9 shrink-0 place-items-center rounded-full font-serif text-lg text-white"
-                      style={{ background: `linear-gradient(140deg, ${category.from}, ${category.to})` }}
-                      aria-hidden
-                    >
-                      {category.glyph}
-                    </span>
-                  </div>
-                  <div className="mt-5 flex items-center justify-between text-[0.7rem] uppercase tracking-[0.12em] text-faint">
-                    <span>
-                      {count} {count === 1 ? "article" : "articles"}
-                    </span>
-                    <ArrowUpRightIcon className="size-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                  </div>
-                </Link>
-              );
-            })}
-
-            <Link
-              href="/stories"
-              className="group relative overflow-hidden rounded-lg border border-gold/30 bg-gold/5 p-5 card-lift"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <h3 className="font-serif text-lg font-semibold text-ink">{storyCategory.name}</h3>
-                  <p className="mt-1.5 line-clamp-2 text-[0.83rem] leading-relaxed text-muted">
-                    Short fiction drafted with AI, finished by a human editor.
-                  </p>
-                </div>
-                <span className="grid size-9 shrink-0 place-items-center rounded-full bg-gold text-lg text-white">
-                  {storyCategory.glyph}
-                </span>
-              </div>
-              <div className="mt-5 flex items-center justify-between text-[0.7rem] uppercase tracking-[0.12em] text-gold">
-                <span>{getAllStories().length} stories</span>
-                <ArrowUpRightIcon className="size-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </div>
-            </Link>
-
-            <Link
-              href="/blog"
-              className="group flex flex-col justify-between rounded-lg border border-line bg-surface p-5 card-lift"
-            >
-              <div>
-                <p className="kicker text-accent">Everything</p>
-                <h3 className="mt-2 font-serif text-lg font-semibold text-ink">
-                  Browse all {getAllPosts().length} guides
-                </h3>
-                <p className="mt-1.5 text-[0.83rem] leading-relaxed text-muted">
-                  The full archive, newest first, filterable by section and topic.
-                </p>
-              </div>
-              <div className="mt-5 flex items-center justify-between text-[0.7rem] uppercase tracking-[0.12em] text-faint">
-                <span>All articles</span>
-                <ArrowUpRightIcon className="size-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </div>
-            </Link>
-          </div>
+          <CategoryTiles posts={posts} storyCount={stories.length} storyCover={stories.find((s) => s.image)} />
         </div>
       </section>
 
@@ -212,12 +130,7 @@ export default function HomePage() {
       {/* Latest                                                            */}
       {/* ---------------------------------------------------------------- */}
       <section className="shell py-16" aria-labelledby="latest-heading">
-        <SectionHeading
-          kicker="Fresh from the desk"
-          title="The latest"
-          href="/blog"
-          linkLabel="See everything"
-        />
+        <SectionHeading kicker="Fresh from the desk" title="The latest" href="/blog" linkLabel="See everything" />
         <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
           {latest.map((doc) => (
             <PostCard key={doc.slug} doc={doc} />
@@ -234,7 +147,7 @@ export default function HomePage() {
       {/* ---------------------------------------------------------------- */}
       <section className="bg-[#14110d] text-[#f4eee4]" aria-labelledby="stories-heading">
         <div className="shell py-16">
-          <div className="mb-8 flex flex-wrap items-end justify-between gap-6 border-b border-white/10 pb-5">
+          <div className="mb-9 flex flex-wrap items-end justify-between gap-6 border-b border-white/10 pb-5">
             <div>
               <p className="kicker text-[#d8a74a]">The Story Studio</p>
               <h2
@@ -244,8 +157,8 @@ export default function HomePage() {
                 Short fiction, read in one sitting
               </h2>
               <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[#bfb5a6]">
-                Two or three minutes of atmosphere — drafted with AI, edited by a human, and
-                published only when it earns its place.
+                Two or three minutes of atmosphere — drafted with AI, edited by a human, published
+                only when it earns its place.
               </p>
             </div>
             <Link
@@ -258,17 +171,25 @@ export default function HomePage() {
           </div>
 
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {stories.map((story) => (
+            {stories.slice(0, 3).map((story) => (
               <article key={story.slug} className="group">
                 <Link href={`/stories/${story.slug}`} className="block">
-                  <div className="overflow-hidden rounded-lg border border-white/10">
-                    <CoverArt
-                      category={story.category}
-                      seedKey={story.slug}
-                      ratio="aspect-[3/2]"
-                      glyphClassName="text-6xl"
-                      className="transition-transform duration-700 group-hover:scale-[1.04]"
-                    />
+                  <div className="relative aspect-[3/2] overflow-hidden rounded-lg border border-white/10">
+                    {story.image ? (
+                      <Image
+                        src={story.image}
+                        alt={story.imageAlt ?? story.title}
+                        fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        className="object-cover transition-transform duration-[900ms] group-hover:scale-105"
+                      />
+                    ) : (
+                      <div
+                        className="absolute inset-0"
+                        style={{ background: "linear-gradient(150deg, #C7952B, #7A5410)" }}
+                        aria-hidden
+                      />
+                    )}
                   </div>
                   <p className="mt-4 text-[0.65rem] uppercase tracking-[0.16em] text-[#d8a74a]">
                     Fiction · {story.readingTime} min
@@ -296,15 +217,15 @@ export default function HomePage() {
             Slow enough to be right, fast enough to load
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-muted">
-            {siteConfig.name} is a small editorial studio. We publish fewer pieces than a
-            content farm, and every one of them goes through the same three steps.
+            {siteConfig.name} is a small editorial studio. We publish fewer pieces than a content
+            farm, and every one of them goes through the same three steps.
           </p>
 
           <ol className="mt-7 space-y-5">
             {[
               {
                 title: "Research first",
-                body: "Claims are checked against primary sources — studies, official guidance, manufacturer documentation — before drafting begins.",
+                body: "Claims are checked against primary sources — studies, official guidance, manufacturer documentation — and linked at the end of each article.",
               },
               {
                 title: "Edited by a human",
@@ -312,7 +233,7 @@ export default function HomePage() {
               },
               {
                 title: "Kept current",
-                body: "Guides carry a visible last-updated date. When something changes, we revise the article rather than writing a new one.",
+                body: "Guides carry a visible last-updated date. When something changes, we revise the article rather than writing a new one about it.",
               },
             ].map((step, index) => (
               <li key={step.title} className="flex gap-4">
@@ -342,8 +263,8 @@ export default function HomePage() {
             One good idea, every Sunday
           </h2>
           <p className="mt-2.5 text-sm leading-relaxed text-muted">
-            The Sunday Letter is a short read: one piece from the archive, one recipe or
-            routine worth trying, and nothing else. Free, and one click to leave.
+            The Sunday Letter is a short read: one piece from the archive, one recipe or routine
+            worth trying, and nothing else. Free, and one click to leave.
           </p>
           <NewsletterForm className="mt-6" cta="Join free" />
           <p className="mt-3 text-xs text-faint">
@@ -356,7 +277,7 @@ export default function HomePage() {
           <div className="mt-7 grid grid-cols-3 gap-3 border-t border-line pt-6 text-center">
             {[
               { value: `${posts.length}`, label: "Guides" },
-              { value: `${getAllStories().length}`, label: "Stories" },
+              { value: `${stories.length}`, label: "Stories" },
               { value: "0", label: "Pop-ups" },
             ].map((stat) => (
               <div key={stat.label}>
@@ -369,6 +290,16 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <div className="shell hidden justify-center pb-8 lg:flex">
+        <Link
+          href="/blog"
+          className="group inline-flex items-center gap-2 rounded-full border border-line px-5 py-2.5 text-xs font-medium text-ink-soft transition-colors hover:border-accent hover:text-accent"
+        >
+          Browse all {posts.length} guides
+          <ArrowUpRightIcon className="size-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+        </Link>
+      </div>
     </>
   );
 }
