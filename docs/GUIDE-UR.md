@@ -1,5 +1,23 @@
 # Roman Urdu Guide — site chalane aur AdSense approve karwane ka tareeqa
 
+> ## 🟢 LIVE SITE
+> **https://kindlestories.vercel.app** — deploy ho chuki hai aur chal rahi hai.
+> Vercel project ka naam: `kindle_stories` (team: `pos-free`).
+> Aage custom domain lagane ke liye step 1A parhein.
+
+---
+
+## 1A. Custom domain lagana (jab domain kharid lein)
+
+1. Vercel → project `kindle_stories` → **Settings → Domains** → apna domain add karein (e.g. `yourdomain.com`).
+2. Vercel jo DNS records dega (A record + CNAME) wo apne domain provider (Namecheap, GoDaddy, Cloudflare) mein add karein.
+3. Phir **Settings → Environment Variables** mein ye add karein:
+   - `NEXT_PUBLIC_SITE_URL` = `https://yourdomain.com`
+4. **Deployments → latest → ⋯ → Redeploy** dabayein (environment variable tab hi lagta hai).
+
+> Wajah: `NEXT_PUBLIC_SITE_URL` se sitemap, RSS aur canonical URLs bante hain. Ye set na ho to site khud `*.vercel.app` URL use karti hai — jo abhi theek chal raha hai, lekin custom domain ke baad ise update karna zaroori hai.
+
+
 Ye guide un "non-developer" steps ke liye hai jo aap ko website live karne, article publish karne aur AdSense approve karwane ke liye chahiye.
 
 ---
